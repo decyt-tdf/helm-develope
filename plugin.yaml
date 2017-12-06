@@ -1,0 +1,6 @@
+name: "develope"
+version: "0.1.0"
+usage: "Watch and upgrade files inside a release as you code"
+description: |-
+  Watch and upgrade files inside a release as you code.
+command: "$HELM_PLUGIN_DIR/develope.sh"
