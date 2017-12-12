@@ -24,9 +24,13 @@ function check_deps () {
 }
 
 function watch () {
-  inotifywait -m -r --format %w%f --event modify "$(pwd)" | while read file; do
-    echo "uploading ${file}"
-    kubectl cp "${file}" "${pod}":"${file//$(pwd)/${app_path}}" -c "${container}"
+  inotifywait -m -r --format %w%f --event modify,moved_to "$(pwd)" | while read file; do
+    EXT=${file##*.}
+    if [ $EXT = "php" ]
+    then
+      echo "uploading ${file}"
+      kubectl cp "${file}" "${pod}":"${file//$(pwd)/${app_path}}" -c "${container}"
+    fi
   done
 }
 
